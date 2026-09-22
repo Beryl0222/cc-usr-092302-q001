@@ -1,0 +1,510 @@
+{
+  "catalog_version": 1,
+  "description": "家庭持续阅读接力 · 事件目录。kind 为事实类型，context 为限界上下文，payload_required 为载荷必填字段与类型。external=true 表示由外部请求（扫码/报名/提交）触发，事件必须携带 request_id 用于幂等。",
+  "types": {
+    "id": "标识符（字符串）",
+    "string": "字符串",
+    "date": "日期 YYYY-MM-DD",
+    "datetime": "RFC3339 带偏移量的日期时间",
+    "int": "整数",
+    "bool": "布尔",
+    "array": "数组（元素类型在冒号后，如 array:string）",
+    "object": "对象",
+    "enum": "枚举，允许值在冒号后逗号分隔"
+  },
+  "events": {
+    "PERSON_REGISTERED": {
+      "context": "identity",
+      "external": false,
+      "description": "读者建档。未成年人按 birth_date 在查询时刻动态计算年龄。",
+      "payload_required": {
+        "person_id": "id",
+        "display_name": "string",
+        "birth_date": "date",
+        "is_minor": "bool"
+      }
+    },
+    "GUARDIANSHIP_GRANTED": {
+      "context": "identity",
+      "external": false,
+      "description": "建立监护关系与授权范围；basis_version 固定当时授权文本版本。",
+      "payload_required": {
+        "guardianship_id": "id",
+        "guardian_id": "id",
+        "child_id": "id",
+        "scopes": "array:string",
+        "valid_from": "datetime",
+        "valid_to": "datetime",
+        "basis_version": "string"
+      }
+    },
+    "GUARDIANSHIP_REVOKED": {
+      "context": "identity",
+      "external": false,
+      "description": "监护关系解除。",
+      "payload_required": {
+        "guardianship_id": "id",
+        "revoked_by": "id",
+        "reason": "string"
+      }
+    },
+    "CONSENT_GRANTED": {
+      "context": "identity",
+      "external": false,
+      "description": "隐私授权授予：授权人、处理者、范围、门店、文本版本、有效期。",
+      "payload_required": {
+        "consent_id": "id",
+        "person_id": "id",
+        "granted_by": "id",
+        "processor": "string",
+        "scopes": "array:string",
+        "store_ids": "array:string",
+        "basis_version": "string",
+        "valid_from": "datetime",
+        "valid_to": "datetime"
+      }
+    },
+    "CONSENT_WITHDRAWN": {
+      "context": "identity",
+      "external": true,
+      "description": "隐私授权撤回。儿童本人撤回优先级高于监护人后续授予；历史事实保留，派生视图停止使用。",
+      "payload_required": {
+        "consent_id": "id",
+        "person_id": "id",
+        "withdrawn_by": "id",
+        "withdrawn_by_relation": "enum:self,guardian,system",
+        "scopes": "array:string"
+      }
+    },
+    "PREFERENCE_DECLARED": {
+      "context": "profile",
+      "external": true,
+      "description": "兴趣偏好声明；儿童偏好可本人声明或家长代录（actor_id/on_behalf_of 区分）。",
+      "payload_required": {
+        "person_id": "id",
+        "interests": "array:string"
+      }
+    },
+    "PREFERENCE_WITHDRAWN": {
+      "context": "profile",
+      "external": true,
+      "description": "偏好撤回（孩子可撤回被代录的偏好），撤回后不再进入推荐。",
+      "payload_required": {
+        "person_id": "id",
+        "interests": "array:string",
+        "withdrawn_by": "id"
+      }
+    },
+    "WORK_RECORDED": {
+      "context": "catalog",
+      "external": false,
+      "description": "作品建档（作品与版本分离）。",
+      "payload_required": {
+        "work_id": "id",
+        "title": "string",
+        "author": "string"
+      }
+    },
+    "EDITION_RECORDED": {
+      "context": "catalog",
+      "external": false,
+      "description": "版本建档：ISBN、出版社、内容说明及其版本、适读年龄区间、分级表版本。",
+      "payload_required": {
+        "edition_id": "id",
+        "work_id": "id",
+        "isbn": "string",
+        "publisher": "string",
+        "note": "string",
+        "note_version": "int",
+        "min_age": "int",
+        "max_age": "int",
+        "gating_version": "string"
+      }
+    },
+    "EDITION_UPDATED": {
+      "context": "catalog",
+      "external": false,
+      "description": "版本说明更新（note_version 递增）；只影响今后的展示与推荐，历史推荐读快照。",
+      "payload_required": {
+        "edition_id": "id",
+        "note": "string",
+        "note_version": "int",
+        "changes": "array:string"
+      }
+    },
+    "AGE_GATING_SET": {
+      "context": "catalog",
+      "external": false,
+      "description": "某版本适读区间调整，分级表版本变更。",
+      "payload_required": {
+        "edition_id": "id",
+        "min_age": "int",
+        "max_age": "int",
+        "gating_version": "string"
+      }
+    },
+    "BOOKLIST_PUBLISHED": {
+      "context": "recommendation",
+      "external": false,
+      "description": "书单发布；source_event_id 可指向产生书单的作家活动。",
+      "payload_required": {
+        "booklist_id": "id",
+        "title": "string",
+        "edition_ids": "array:string",
+        "source_event_id": "id"
+      }
+    },
+    "RECOMMENDATION_MADE": {
+      "context": "recommendation",
+      "external": true,
+      "description": "针对读者的推荐；内嵌书目说明、适龄区间、理由与依据版本快照，保证日后可逐字还原。",
+      "payload_required": {
+        "recommendation_id": "id",
+        "reader_id": "id",
+        "edition_id": "id",
+        "edition_description_snapshot": "string",
+        "age_gating_snapshot": "object",
+        "reason_codes": "array:string",
+        "reason_text": "string",
+        "basis_versions": "object"
+      }
+    },
+    "RECOMMENDATION_WITHDRAWN": {
+      "context": "recommendation",
+      "external": true,
+      "description": "推荐撤回；孩子本人撤回为终态，监护人不可重新开启。",
+      "payload_required": {
+        "recommendation_id": "id",
+        "reader_id": "id",
+        "withdrawn_by": "id",
+        "withdrawn_by_relation": "enum:self,guardian"
+      }
+    },
+    "STORE_RECORDED": {
+      "context": "inventory",
+      "external": false,
+      "description": "门店建档。",
+      "payload_required": {
+        "store_id": "id",
+        "name": "string",
+        "city": "string"
+      }
+    },
+    "ITEM_RECORDED": {
+      "context": "inventory",
+      "external": false,
+      "description": "单本可借物建档（条码/单册），归属版本与归属门店。",
+      "payload_required": {
+        "item_id": "id",
+        "edition_id": "id",
+        "home_store_id": "id",
+        "barcode": "string"
+      }
+    },
+    "STOCK_ADJUSTED": {
+      "context": "inventory",
+      "external": false,
+      "description": "库存调整（盘点/报损/纠错等补偿事实）。",
+      "payload_required": {
+        "item_id": "id",
+        "delta": "int",
+        "reason": "enum:found,loss,correction,write_off,new",
+        "ref": "string"
+      }
+    },
+    "STORE_TEMPORARILY_CLOSED": {
+      "context": "inventory",
+      "external": false,
+      "description": "门店临时闭店；只重排受影响的取/还安排，不影响活动与其他门店库存。",
+      "payload_required": {
+        "store_id": "id",
+        "closed_from": "datetime",
+        "closed_to": "datetime",
+        "alternative_store_id": "id"
+      }
+    },
+    "STORE_REOPENED": {
+      "context": "inventory",
+      "external": false,
+      "description": "门店提前/按期恢复营业。",
+      "payload_required": {
+        "store_id": "id",
+        "reopened_at": "datetime"
+      }
+    },
+    "LOAN_RESERVED": {
+      "context": "loan",
+      "external": true,
+      "description": "借阅预约/下单；pickup_plan 为取书安排（门店+计划时间），可被闭店事件重排。",
+      "payload_required": {
+        "loan_id": "id",
+        "reader_id": "id",
+        "item_id": "id",
+        "pickup_store_id": "id",
+        "return_store_id": "id",
+        "pickup_plan": "object"
+      }
+    },
+    "LOAN_PICKED_UP": {
+      "context": "loan",
+      "external": true,
+      "description": "取书借出；折叠时单册必须可借，重复 request_id 不产生第二次扣减。",
+      "payload_required": {
+        "loan_id": "id",
+        "reader_id": "id",
+        "item_id": "id",
+        "store_id": "id",
+        "due_at": "datetime"
+      }
+    },
+    "LOAN_IN_TRANSIT": {
+      "context": "loan",
+      "external": true,
+      "description": "跨店调拨/归还在途；起止门店均可见但在途册不可再次借出。",
+      "payload_required": {
+        "loan_id": "id",
+        "item_id": "id",
+        "from_store_id": "id",
+        "to_store_id": "id",
+        "departed_at": "datetime"
+      }
+    },
+    "LOAN_ARRIVED": {
+      "context": "loan",
+      "external": true,
+      "description": "在途册到达门店，等待上架/领取。",
+      "payload_required": {
+        "loan_id": "id",
+        "item_id": "id",
+        "store_id": "id",
+        "arrived_at": "datetime"
+      }
+    },
+    "LOAN_RETURNED": {
+      "context": "loan",
+      "external": true,
+      "description": "归还上架；跨店还书先经 IN_TRANSIT/ARRIVED。",
+      "payload_required": {
+        "loan_id": "id",
+        "item_id": "id",
+        "return_store_id": "id",
+        "returned_at": "datetime"
+      }
+    },
+    "LOAN_OVERDUE_MARKED": {
+      "context": "loan",
+      "external": false,
+      "description": "系统对超期未还/未续借阅单的逾期标记；同一借阅单幂等。",
+      "payload_required": {
+        "loan_id": "id",
+        "marked_at": "datetime"
+      }
+    },
+    "LOAN_RENEWED": {
+      "context": "loan",
+      "external": true,
+      "description": "续借，更新到期时间。",
+      "payload_required": {
+        "loan_id": "id",
+        "new_due_at": "datetime"
+      }
+    },
+    "LOAN_PLAN_RESCHEDULED": {
+      "context": "loan",
+      "external": false,
+      "description": "闭店等只改取/还安排的派事实：改期或改替代门店，借阅单与册状态不变；closure_event_id 指回闭店事件。",
+      "payload_required": {
+        "loan_id": "id",
+        "plan_kind": "enum:pickup,return",
+        "old_store_id": "id",
+        "new_store_id": "id",
+        "old_planned_at": "datetime",
+        "new_planned_at": "datetime",
+        "reason": "string",
+        "closure_event_id": "id"
+      }
+    },
+    "LOAN_MISSING_MARKED": {
+      "context": "loan",
+      "external": false,
+      "description": "借阅单/单册异常报失补偿事实。",
+      "payload_required": {
+        "loan_id": "id",
+        "item_id": "id",
+        "marked_at": "datetime",
+        "reason": "string"
+      }
+    },
+    "AUTHOR_EVENT_SCHEDULED": {
+      "context": "event",
+      "external": false,
+      "description": "作家对谈等活动排期；容量 capacity 与候补分开管理。",
+      "payload_required": {
+        "author_event_id": "id",
+        "title": "string",
+        "store_id": "id",
+        "start_at": "datetime",
+        "end_at": "datetime",
+        "capacity": "int",
+        "min_age": "int"
+      }
+    },
+    "EVENT_REGISTRATION_OPENED": {
+      "context": "event",
+      "external": false,
+      "description": "活动开启报名。",
+      "payload_required": {
+        "author_event_id": "id",
+        "opened_at": "datetime"
+      }
+    },
+    "EVENT_REGISTERED": {
+      "context": "event",
+      "external": true,
+      "description": "报名成功，占用一个出席名额；与权益账分离（权益另发 BENEFIT_USED）。",
+      "payload_required": {
+        "author_event_id": "id",
+        "reader_id": "id",
+        "registered_by": "id",
+        "member_priority": "bool"
+      }
+    },
+    "EVENT_WAITLISTED": {
+      "context": "event",
+      "external": true,
+      "description": "名额满进入候补，position 为候补序位。",
+      "payload_required": {
+        "author_event_id": "id",
+        "reader_id": "id",
+        "position": "int"
+      }
+    },
+    "EVENT_REGISTRATION_PROMOTED": {
+      "context": "event",
+      "external": true,
+      "description": "候补晋升为可报名，需在 confirm_by 前确认；晋升动作幂等。",
+      "payload_required": {
+        "author_event_id": "id",
+        "reader_id": "id",
+        "position": "int",
+        "confirm_by": "datetime"
+      }
+    },
+    "EVENT_REGISTRATION_CANCELLED": {
+      "context": "event",
+      "external": true,
+      "description": "取消报名、释放名额；权益是否返还有 BENEFIT_RESTORED 独立记账。",
+      "payload_required": {
+        "author_event_id": "id",
+        "reader_id": "id",
+        "reason": "enum:self,guardian,timeout,store_closed,system"
+      }
+    },
+    "EVENT_ATTENDED": {
+      "context": "event",
+      "external": true,
+      "description": "活动签到；correlation_id 贯穿后续推荐、借阅、指导、反馈。",
+      "payload_required": {
+        "author_event_id": "id",
+        "reader_id": "id",
+        "checked_in_at": "datetime"
+      }
+    },
+    "MEMBERSHIP_GRANTED": {
+      "context": "membership",
+      "external": false,
+      "description": "会员身份授予。",
+      "payload_required": {
+        "reader_id": "id",
+        "plan": "string",
+        "valid_from": "datetime",
+        "valid_to": "datetime"
+      }
+    },
+    "MEMBERSHIP_REVOKED": {
+      "context": "membership",
+      "external": false,
+      "description": "会员身份撤销。",
+      "payload_required": {
+        "reader_id": "id",
+        "reason": "string"
+      }
+    },
+    "BENEFIT_USED": {
+      "context": "membership",
+      "external": false,
+      "description": "权益使用留痕（优先名额、跨店次数等），独立于报名与借阅计数；ref 指向对应报名或借阅单。",
+      "payload_required": {
+        "reader_id": "id",
+        "benefit_type": "enum:priority_registration,cross_store_loan,extra_renew",
+        "ref": "id",
+        "used_at": "datetime"
+      }
+    },
+    "BENEFIT_RESTORED": {
+      "context": "membership",
+      "external": false,
+      "description": "取消报名/退订后返还对应权益。",
+      "payload_required": {
+        "reader_id": "id",
+        "benefit_type": "enum:priority_registration,cross_store_loan,extra_renew",
+        "ref": "id",
+        "reason": "string"
+      }
+    },
+    "GUIDE_QUALIFIED": {
+      "context": "guidance",
+      "external": false,
+      "description": "阅读指导资格授予（培训/角色），与消费无关，含有效期。",
+      "payload_required": {
+        "guide_id": "id",
+        "certified_by": "string",
+        "valid_from": "datetime",
+        "valid_to": "datetime"
+      }
+    },
+    "GUIDANCE_SESSION_HELD": {
+      "context": "guidance",
+      "external": true,
+      "description": "指导会话发生；校验仅查资格有效、guidance 授权有效、内容适龄，禁止消费条件。",
+      "payload_required": {
+        "session_id": "id",
+        "guide_id": "id",
+        "reader_id": "id",
+        "held_at": "datetime"
+      }
+    },
+    "GUIDANCE_NOTE_RECORDED": {
+      "context": "guidance",
+      "external": true,
+      "description": "指导建议留痕。",
+      "payload_required": {
+        "session_id": "id",
+        "note": "string"
+      }
+    },
+    "FAMILY_FEEDBACK_RECORDED": {
+      "context": "feedback",
+      "external": true,
+      "description": "家庭共读反馈；author_role 区分孩子与家长声音。",
+      "payload_required": {
+        "feedback_id": "id",
+        "reader_id": "id",
+        "author_id": "id",
+        "author_role": "enum:child,guardian",
+        "recorded_at": "datetime",
+        "summary": "string"
+      }
+    },
+    "FEEDBACK_WITHDRAWN": {
+      "context": "feedback",
+      "external": true,
+      "description": "反馈撤回；孩子本人可撤回自己的反馈且监护人不可恢复。",
+      "payload_required": {
+        "feedback_id": "id",
+        "withdrawn_by": "id",
+        "withdrawn_by_relation": "enum:self,guardian"
+      }
+    }
+  }
+}

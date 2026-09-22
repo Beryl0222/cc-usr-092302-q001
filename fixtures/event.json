@@ -1,7 +1,18 @@
 {
   "event_id": "092302-001-sample",
-  "kind": "PLAN_FROZEN",
+  "kind": "AUTHOR_EVENT_SCHEDULED",
+  "context": "event",
   "occurred_at": "2026-09-22T10:00:00+08:00",
-  "subject_id": "family-reading-continuity",
-  "version": 1
+  "subject_id": "evt-wh-shenzhixing-0923",
+  "actor_id": "system:events",
+  "version": 1,
+  "payload": {
+    "author_event_id": "evt-wh-shenzhixing-0923",
+    "title": "沈之行为人读者对谈·江声与书信",
+    "store_id": "store-wh-01",
+    "start_at": "2026-09-23T19:00:00+08:00",
+    "end_at": "2026-09-23T21:00:00+08:00",
+    "capacity": 40,
+    "min_age": 8
+  }
 }

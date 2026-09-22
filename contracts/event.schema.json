@@ -1,27 +1,134 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "家庭持续阅读接力 · 事件信封",
   "type": "object",
   "required": [
     "event_id",
     "kind",
     "occurred_at",
     "subject_id",
-    "version"
+    "version",
+    "context",
+    "actor_id",
+    "payload"
   ],
+  "additionalProperties": false,
   "properties": {
     "event_id": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1,
+      "description": "全局唯一事件 id"
     },
     "kind": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "PERSON_REGISTERED",
+        "GUARDIANSHIP_GRANTED",
+        "GUARDIANSHIP_REVOKED",
+        "CONSENT_GRANTED",
+        "CONSENT_WITHDRAWN",
+        "PREFERENCE_DECLARED",
+        "PREFERENCE_WITHDRAWN",
+        "WORK_RECORDED",
+        "EDITION_RECORDED",
+        "EDITION_UPDATED",
+        "AGE_GATING_SET",
+        "BOOKLIST_PUBLISHED",
+        "RECOMMENDATION_MADE",
+        "RECOMMENDATION_WITHDRAWN",
+        "STORE_RECORDED",
+        "ITEM_RECORDED",
+        "STOCK_ADJUSTED",
+        "STORE_TEMPORARILY_CLOSED",
+        "STORE_REOPENED",
+        "LOAN_RESERVED",
+        "LOAN_PICKED_UP",
+        "LOAN_IN_TRANSIT",
+        "LOAN_ARRIVED",
+        "LOAN_RETURNED",
+        "LOAN_OVERDUE_MARKED",
+        "LOAN_RENEWED",
+        "LOAN_PLAN_RESCHEDULED",
+        "LOAN_MISSING_MARKED",
+        "AUTHOR_EVENT_SCHEDULED",
+        "EVENT_REGISTRATION_OPENED",
+        "EVENT_REGISTERED",
+        "EVENT_WAITLISTED",
+        "EVENT_REGISTRATION_PROMOTED",
+        "EVENT_REGISTRATION_CANCELLED",
+        "EVENT_ATTENDED",
+        "MEMBERSHIP_GRANTED",
+        "MEMBERSHIP_REVOKED",
+        "BENEFIT_USED",
+        "BENEFIT_RESTORED",
+        "GUIDE_QUALIFIED",
+        "GUIDANCE_SESSION_HELD",
+        "GUIDANCE_NOTE_RECORDED",
+        "FAMILY_FEEDBACK_RECORDED",
+        "FEEDBACK_WITHDRAWN"
+      ]
     },
     "occurred_at": {
-      "type": "string"
+      "type": "string",
+      "format": "date-time",
+      "description": "事实发生时间，RFC3339 带偏移量"
     },
     "subject_id": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "version": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 1
+    },
+    "context": {
+      "type": "string",
+      "enum": [
+        "identity",
+        "profile",
+        "catalog",
+        "recommendation",
+        "inventory",
+        "loan",
+        "event",
+        "membership",
+        "guidance",
+        "feedback"
+      ]
+    },
+    "actor_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "实际发起人；系统动作为 system:*；代行时记监护人 id，孩子写入 on_behalf_of"
+    },
+    "on_behalf_of": {
+      "type": "string",
+      "minLength": 1,
+      "description": "代行归属读者（如家长代办时的孩子 id）"
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "外部请求幂等键；目录中 external=true 的事件必填"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "业务接力贯穿 id（通常为作家活动 id）"
+    },
+    "causation_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "直接触发本事件的前一事件 id"
+    },
+    "payload": {
+      "type": "object",
+      "description": "按 kind 在 contracts/event-catalog.json 定义必填字段"
+    },
+    "basis_versions": {
+      "type": "object",
+      "description": "快照依据版本：授权文本、书目说明、分级表等",
+      "additionalProperties": { "type": ["string", "integer"] }
     }
   }
 }

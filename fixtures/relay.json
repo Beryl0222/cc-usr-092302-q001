@@ -1,0 +1,474 @@
+{
+  "description": "武汉场作家对谈后的一条完整家庭阅读接力：监护与授权 → 活动报名（权益独立记账）→ 出席 → 适龄推荐（快照）→ 闭店只改取书安排 → 跨店借阅与归还在途 → 阅读指导 → 孩子反馈 → 书目说明事后更新（历史推荐仍可还原）。correlation_id 贯穿全场。",
+  "correlation_id": "evt-wh-shenzhixing-0923",
+  "events": [
+    {
+      "event_id": "e-0001",
+      "kind": "STORE_RECORDED",
+      "context": "inventory",
+      "occurred_at": "2025-03-01T09:00:00+08:00",
+      "subject_id": "store-wh-01",
+      "actor_id": "system:catalog",
+      "version": 1,
+      "payload": {"store_id": "store-wh-01", "name": "句象书店·武昌店", "city": "武汉"}
+    },
+    {
+      "event_id": "e-0002",
+      "kind": "STORE_RECORDED",
+      "context": "inventory",
+      "occurred_at": "2025-03-01T09:00:00+08:00",
+      "subject_id": "store-wh-02",
+      "actor_id": "system:catalog",
+      "version": 1,
+      "payload": {"store_id": "store-wh-02", "name": "句象书店·汉口店", "city": "武汉"}
+    },
+    {
+      "event_id": "e-0101",
+      "kind": "PERSON_REGISTERED",
+      "context": "identity",
+      "occurred_at": "2026-01-05T10:00:00+08:00",
+      "subject_id": "person-lxm-001",
+      "actor_id": "system:pos",
+      "version": 1,
+      "payload": {"person_id": "person-lxm-001", "display_name": "林小满", "birth_date": "2016-04-10", "is_minor": true}
+    },
+    {
+      "event_id": "e-0102",
+      "kind": "PERSON_REGISTERED",
+      "context": "identity",
+      "occurred_at": "2026-01-05T10:00:00+08:00",
+      "subject_id": "person-zl-001",
+      "actor_id": "system:pos",
+      "version": 1,
+      "payload": {"person_id": "person-zl-001", "display_name": "周岚", "birth_date": "1988-06-02", "is_minor": false}
+    },
+    {
+      "event_id": "e-0103",
+      "kind": "GUARDIANSHIP_GRANTED",
+      "context": "identity",
+      "occurred_at": "2026-01-05T10:05:00+08:00",
+      "subject_id": "g-zl-lxm-01",
+      "actor_id": "person-zl-001",
+      "version": 1,
+      "payload": {
+        "guardianship_id": "g-zl-lxm-01",
+        "guardian_id": "person-zl-001",
+        "child_id": "person-lxm-001",
+        "scopes": ["profile_view", "recommendation", "guidance", "event_followup", "cross_store_history", "family_feedback"],
+        "valid_from": "2026-01-05T10:05:00+08:00",
+        "valid_to": "2030-01-05T10:05:00+08:00",
+        "basis_version": "consent-text-v3"
+      }
+    },
+    {
+      "event_id": "e-0104",
+      "kind": "CONSENT_GRANTED",
+      "context": "identity",
+      "occurred_at": "2026-01-05T10:05:30+08:00",
+      "subject_id": "c-lxm-01",
+      "actor_id": "person-zl-001",
+      "on_behalf_of": "person-lxm-001",
+      "version": 1,
+      "payload": {
+        "consent_id": "c-lxm-01",
+        "person_id": "person-lxm-001",
+        "granted_by": "person-zl-001",
+        "processor": "juxiang-family-reading",
+        "scopes": ["recommendation", "guidance", "event_followup", "cross_store_history", "family_feedback"],
+        "store_ids": ["store-wh-01", "store-wh-02"],
+        "basis_version": "consent-text-v3",
+        "valid_from": "2026-01-05T10:05:30+08:00",
+        "valid_to": "2030-01-05T10:05:30+08:00"
+      }
+    },
+    {
+      "event_id": "e-0201",
+      "kind": "PREFERENCE_DECLARED",
+      "context": "profile",
+      "occurred_at": "2026-09-01T19:30:00+08:00",
+      "subject_id": "person-lxm-001",
+      "actor_id": "person-zl-001",
+      "on_behalf_of": "person-lxm-001",
+      "request_id": "req-pref-9f21",
+      "version": 1,
+      "payload": {"person_id": "person-lxm-001", "interests": ["江河", "书信", "奇幻"]}
+    },
+    {
+      "event_id": "e-0301",
+      "kind": "WORK_RECORDED",
+      "context": "catalog",
+      "occurred_at": "2026-08-20T11:00:00+08:00",
+      "subject_id": "work-riverlight-01",
+      "actor_id": "system:catalog",
+      "version": 1,
+      "payload": {"work_id": "work-riverlight-01", "title": "江声里的信", "author": "沈之行"}
+    },
+    {
+      "event_id": "e-0302",
+      "kind": "EDITION_RECORDED",
+      "context": "catalog",
+      "occurred_at": "2026-08-20T11:05:00+08:00",
+      "subject_id": "ed-riverlight-01-cn",
+      "actor_id": "system:catalog",
+      "version": 1,
+      "payload": {
+        "edition_id": "ed-riverlight-01-cn",
+        "work_id": "work-riverlight-01",
+        "isbn": "978-7-1111-0001-1",
+        "publisher": "潮信出版社",
+        "note": "女孩在江边长堤捡到一封没有收件人的信，顺着江声寻找寄信人的夏天。",
+        "note_version": 1,
+        "min_age": 8,
+        "max_age": 12,
+        "gating_version": "gating-2026-06"
+      }
+    },
+    {
+      "event_id": "e-0303",
+      "kind": "ITEM_RECORDED",
+      "context": "inventory",
+      "occurred_at": "2026-08-25T09:00:00+08:00",
+      "subject_id": "item-wh-01-00077",
+      "actor_id": "system:catalog",
+      "version": 1,
+      "payload": {
+        "item_id": "item-wh-01-00077",
+        "edition_id": "ed-riverlight-01-cn",
+        "home_store_id": "store-wh-01",
+        "barcode": "WH01-00077"
+      }
+    },
+    {
+      "event_id": "e-0501",
+      "kind": "AUTHOR_EVENT_SCHEDULED",
+      "context": "event",
+      "occurred_at": "2026-09-01T09:00:00+08:00",
+      "subject_id": "evt-wh-shenzhixing-0923",
+      "actor_id": "system:events",
+      "version": 1,
+      "payload": {
+        "author_event_id": "evt-wh-shenzhixing-0923",
+        "title": "沈之行为人读者对谈·江声与书信",
+        "store_id": "store-wh-01",
+        "start_at": "2026-09-23T19:00:00+08:00",
+        "end_at": "2026-09-23T21:00:00+08:00",
+        "capacity": 40,
+        "min_age": 8
+      }
+    },
+    {
+      "event_id": "e-0502",
+      "kind": "EVENT_REGISTRATION_OPENED",
+      "context": "event",
+      "occurred_at": "2026-09-02T10:00:00+08:00",
+      "subject_id": "evt-wh-shenzhixing-0923",
+      "actor_id": "system:events",
+      "version": 1,
+      "payload": {"author_event_id": "evt-wh-shenzhixing-0923", "opened_at": "2026-09-02T10:00:00+08:00"}
+    },
+    {
+      "event_id": "e-0503",
+      "kind": "MEMBERSHIP_GRANTED",
+      "context": "membership",
+      "occurred_at": "2026-09-02T10:01:00+08:00",
+      "subject_id": "person-lxm-001",
+      "actor_id": "system:membership",
+      "version": 1,
+      "payload": {
+        "reader_id": "person-lxm-001",
+        "plan": "family-reader",
+        "valid_from": "2026-09-02T10:01:00+08:00",
+        "valid_to": "2027-09-02T10:01:00+08:00"
+      }
+    },
+    {
+      "event_id": "e-0504",
+      "kind": "EVENT_REGISTERED",
+      "context": "event",
+      "occurred_at": "2026-09-02T10:02:00+08:00",
+      "subject_id": "evt-wh-shenzhixing-0923",
+      "actor_id": "person-zl-001",
+      "on_behalf_of": "person-lxm-001",
+      "request_id": "req-reg-77a0",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "version": 1,
+      "payload": {
+        "author_event_id": "evt-wh-shenzhixing-0923",
+        "reader_id": "person-lxm-001",
+        "registered_by": "person-zl-001",
+        "member_priority": true
+      }
+    },
+    {
+      "event_id": "e-0505",
+      "kind": "BENEFIT_USED",
+      "context": "membership",
+      "occurred_at": "2026-09-02T10:02:01+08:00",
+      "subject_id": "person-lxm-001",
+      "actor_id": "system:membership",
+      "causation_id": "e-0504",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "version": 1,
+      "payload": {
+        "reader_id": "person-lxm-001",
+        "benefit_type": "priority_registration",
+        "ref": "evt-wh-shenzhixing-0923::person-lxm-001",
+        "used_at": "2026-09-02T10:02:01+08:00"
+      }
+    },
+    {
+      "event_id": "e-0506",
+      "kind": "EVENT_ATTENDED",
+      "context": "event",
+      "occurred_at": "2026-09-23T19:05:00+08:00",
+      "subject_id": "evt-wh-shenzhixing-0923",
+      "actor_id": "person-lxm-001",
+      "request_id": "req-checkin-c31d",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "version": 1,
+      "payload": {
+        "author_event_id": "evt-wh-shenzhixing-0923",
+        "reader_id": "person-lxm-001",
+        "checked_in_at": "2026-09-23T19:05:00+08:00"
+      }
+    },
+    {
+      "event_id": "e-0401",
+      "kind": "RECOMMENDATION_MADE",
+      "context": "recommendation",
+      "occurred_at": "2026-09-23T20:40:00+08:00",
+      "subject_id": "rec-lxm-0001",
+      "actor_id": "person-guide-004",
+      "request_id": "req-rec-11bc",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "causation_id": "e-0506",
+      "version": 1,
+      "payload": {
+        "recommendation_id": "rec-lxm-0001",
+        "reader_id": "person-lxm-001",
+        "edition_id": "ed-riverlight-01-cn",
+        "edition_description_snapshot": "女孩在江边长堤捡到一封没有收件人的信，顺着江声寻找寄信人的夏天。",
+        "age_gating_snapshot": {"min_age": 8, "max_age": 12, "gating_version": "gating-2026-06"},
+        "reason_codes": ["attended_author_talk", "interest:江河", "interest:书信", "age_match"],
+        "reason_text": "小满刚参加了沈之行的对谈，兴趣标签命中江河与书信；本书适读 8–12 岁，适合活动后趁热接力阅读。",
+        "basis_versions": {"catalog_note": "1", "age_gating": "gating-2026-06", "consent_text": "consent-text-v3"}
+      }
+    },
+    {
+      "event_id": "e-0601",
+      "kind": "LOAN_RESERVED",
+      "context": "loan",
+      "occurred_at": "2026-09-23T20:50:00+08:00",
+      "subject_id": "loan-lxm-0001",
+      "actor_id": "person-zl-001",
+      "on_behalf_of": "person-lxm-001",
+      "request_id": "req-reserve-d82e",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "causation_id": "e-0401",
+      "version": 1,
+      "payload": {
+        "loan_id": "loan-lxm-0001",
+        "reader_id": "person-lxm-001",
+        "item_id": "item-wh-01-00077",
+        "pickup_store_id": "store-wh-01",
+        "return_store_id": "store-wh-01",
+        "pickup_plan": {"store_id": "store-wh-01", "planned_at": "2026-09-24T14:00:00+08:00"}
+      }
+    },
+    {
+      "event_id": "e-0602",
+      "kind": "STORE_TEMPORARILY_CLOSED",
+      "context": "inventory",
+      "occurred_at": "2026-09-23T22:00:00+08:00",
+      "subject_id": "store-wh-01",
+      "actor_id": "system:stores",
+      "version": 1,
+      "payload": {
+        "store_id": "store-wh-01",
+        "closed_from": "2026-09-24T09:00:00+08:00",
+        "closed_to": "2026-09-25T09:00:00+08:00",
+        "alternative_store_id": "store-wh-02"
+      }
+    },
+    {
+      "event_id": "e-0603",
+      "kind": "LOAN_PLAN_RESCHEDULED",
+      "context": "loan",
+      "occurred_at": "2026-09-23T22:01:00+08:00",
+      "subject_id": "loan-lxm-0001",
+      "actor_id": "system:stores",
+      "causation_id": "e-0602",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "version": 1,
+      "payload": {
+        "loan_id": "loan-lxm-0001",
+        "plan_kind": "pickup",
+        "old_store_id": "store-wh-01",
+        "new_store_id": "store-wh-02",
+        "old_planned_at": "2026-09-24T14:00:00+08:00",
+        "new_planned_at": "2026-09-24T15:30:00+08:00",
+        "reason": "取书门店武昌店 9/24 临时闭店，改至汉口店取书",
+        "closure_event_id": "e-0602"
+      }
+    },
+    {
+      "event_id": "e-0604",
+      "kind": "LOAN_PICKED_UP",
+      "context": "loan",
+      "occurred_at": "2026-09-24T15:30:00+08:00",
+      "subject_id": "loan-lxm-0001",
+      "actor_id": "person-zl-001",
+      "on_behalf_of": "person-lxm-001",
+      "request_id": "req-pickup-4e6a",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "causation_id": "e-0603",
+      "version": 1,
+      "payload": {
+        "loan_id": "loan-lxm-0001",
+        "reader_id": "person-lxm-001",
+        "item_id": "item-wh-01-00077",
+        "store_id": "store-wh-02",
+        "due_at": "2026-10-08T21:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "e-0701",
+      "kind": "GUIDE_QUALIFIED",
+      "context": "guidance",
+      "occurred_at": "2026-01-10T09:00:00+08:00",
+      "subject_id": "person-guide-004",
+      "actor_id": "system:training",
+      "version": 1,
+      "payload": {
+        "guide_id": "person-guide-004",
+        "certified_by": "句象阅读指导学院",
+        "valid_from": "2026-01-10T09:00:00+08:00",
+        "valid_to": "2028-01-10T09:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "e-0702",
+      "kind": "GUIDANCE_SESSION_HELD",
+      "context": "guidance",
+      "occurred_at": "2026-10-01T11:00:00+08:00",
+      "subject_id": "gs-lxm-0001",
+      "actor_id": "person-guide-004",
+      "request_id": "req-guid-90d1",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "causation_id": "e-0604",
+      "version": 1,
+      "payload": {
+        "session_id": "gs-lxm-0001",
+        "guide_id": "person-guide-004",
+        "reader_id": "person-lxm-001",
+        "held_at": "2026-10-01T11:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "e-0703",
+      "kind": "GUIDANCE_NOTE_RECORDED",
+      "context": "guidance",
+      "occurred_at": "2026-10-01T11:20:00+08:00",
+      "subject_id": "gs-lxm-0001",
+      "actor_id": "person-guide-004",
+      "request_id": "req-note-55aa",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "causation_id": "e-0702",
+      "version": 1,
+      "payload": {
+        "session_id": "gs-lxm-0001",
+        "note": "建议家庭分角色朗读信的段落，读完后一起写一封'给江声'的短信。"
+      }
+    },
+    {
+      "event_id": "e-0801",
+      "kind": "FAMILY_FEEDBACK_RECORDED",
+      "context": "feedback",
+      "occurred_at": "2026-10-03T20:00:00+08:00",
+      "subject_id": "fb-lxm-0001",
+      "actor_id": "person-lxm-001",
+      "request_id": "req-fb-2b77",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "causation_id": "e-0702",
+      "version": 1,
+      "payload": {
+        "feedback_id": "fb-lxm-0001",
+        "reader_id": "person-lxm-001",
+        "author_id": "person-lxm-001",
+        "author_role": "child",
+        "recorded_at": "2026-10-03T20:00:00+08:00",
+        "summary": "我最喜欢长堤上雾起来的那一段，我和妈妈真的互相写了信。"
+      }
+    },
+    {
+      "event_id": "e-0605",
+      "kind": "LOAN_IN_TRANSIT",
+      "context": "loan",
+      "occurred_at": "2026-10-05T18:00:00+08:00",
+      "subject_id": "loan-lxm-0001",
+      "actor_id": "person-zl-001",
+      "request_id": "req-ship-f019",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "causation_id": "e-0604",
+      "version": 1,
+      "payload": {
+        "loan_id": "loan-lxm-0001",
+        "item_id": "item-wh-01-00077",
+        "from_store_id": "store-wh-02",
+        "to_store_id": "store-wh-01",
+        "departed_at": "2026-10-05T18:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "e-0606",
+      "kind": "LOAN_ARRIVED",
+      "context": "loan",
+      "occurred_at": "2026-10-07T10:30:00+08:00",
+      "subject_id": "loan-lxm-0001",
+      "actor_id": "system:loans",
+      "request_id": "req-arrive-7c04",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "causation_id": "e-0605",
+      "version": 1,
+      "payload": {
+        "loan_id": "loan-lxm-0001",
+        "item_id": "item-wh-01-00077",
+        "store_id": "store-wh-01",
+        "arrived_at": "2026-10-07T10:30:00+08:00"
+      }
+    },
+    {
+      "event_id": "e-0607",
+      "kind": "LOAN_RETURNED",
+      "context": "loan",
+      "occurred_at": "2026-10-07T11:00:00+08:00",
+      "subject_id": "loan-lxm-0001",
+      "actor_id": "system:loans",
+      "request_id": "req-return-32ef",
+      "correlation_id": "evt-wh-shenzhixing-0923",
+      "causation_id": "e-0606",
+      "version": 1,
+      "payload": {
+        "loan_id": "loan-lxm-0001",
+        "item_id": "item-wh-01-00077",
+        "return_store_id": "store-wh-01",
+        "returned_at": "2026-10-07T11:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "e-0304",
+      "kind": "EDITION_UPDATED",
+      "context": "catalog",
+      "occurred_at": "2026-10-10T15:00:00+08:00",
+      "subject_id": "ed-riverlight-01-cn",
+      "actor_id": "system:catalog",
+      "version": 1,
+      "payload": {
+        "edition_id": "ed-riverlight-01-cn",
+        "note": "女孩在江边长堤捡到一封没有收件人的信；新版增补作者自序与长堤地图，沿着江声寻找寄信人的夏天。",
+        "note_version": 2,
+        "changes": ["增补作者自序", "增补长堤手绘地图"]
+      }
+    }
+  ]
+}
