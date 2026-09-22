@@ -1,0 +1,442 @@
+{
+  "events": [
+    {
+      "event_id": "e-000001",
+      "kind": "STORE_REGISTERED",
+      "occurred_at": "2026-08-01T09:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 1,
+      "store_id": "store-bj",
+      "city": "北京",
+      "name": "句象书店北京店"
+    },
+    {
+      "event_id": "e-000002",
+      "kind": "STORE_REGISTERED",
+      "occurred_at": "2026-08-01T09:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 2,
+      "store_id": "store-wh",
+      "city": "武汉",
+      "name": "句象书店武汉店"
+    },
+    {
+      "event_id": "e-000003",
+      "kind": "STORE_REGISTERED",
+      "occurred_at": "2026-08-01T09:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 3,
+      "store_id": "store-cs",
+      "city": "长沙",
+      "name": "句象书店长沙店"
+    },
+    {
+      "event_id": "e-000004",
+      "kind": "READER_REGISTERED",
+      "occurred_at": "2026-08-02T10:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 4,
+      "reader_id": "r-parent",
+      "family_id": "fam-1",
+      "display_name": "林一",
+      "birth_date": "1988-03-10",
+      "is_minor": false,
+      "interests": [
+        "历史"
+      ]
+    },
+    {
+      "event_id": "e-000005",
+      "kind": "READER_REGISTERED",
+      "occurred_at": "2026-08-02T10:05:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 5,
+      "reader_id": "r-kid",
+      "family_id": "fam-1",
+      "display_name": "林小夏",
+      "birth_date": "2018-06-01",
+      "is_minor": true,
+      "interests": [
+        "宇宙",
+        "动物"
+      ]
+    },
+    {
+      "event_id": "e-000006",
+      "kind": "GUARDIANSHIP_DECLARED",
+      "occurred_at": "2026-08-02T10:10:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 6,
+      "family_id": "fam-1",
+      "guardian_id": "r-parent",
+      "child_id": "r-kid",
+      "relationship": "母亲"
+    },
+    {
+      "event_id": "e-000007",
+      "kind": "CONSENT_GRANTED",
+      "occurred_at": "2026-08-02T10:15:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 7,
+      "consent_id": "c-kid-loan",
+      "reader_id": "r-kid",
+      "scope": "loan",
+      "actor_id": "r-parent",
+      "on_behalf_of_child": true
+    },
+    {
+      "event_id": "e-000008",
+      "kind": "CONSENT_GRANTED",
+      "occurred_at": "2026-08-02T10:16:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 8,
+      "consent_id": "c-kid-rec",
+      "reader_id": "r-kid",
+      "scope": "recommendation",
+      "actor_id": "r-kid",
+      "on_behalf_of_child": false
+    },
+    {
+      "event_id": "e-000009",
+      "kind": "CONSENT_GRANTED",
+      "occurred_at": "2026-08-02T10:17:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 9,
+      "consent_id": "c-kid-fb",
+      "reader_id": "r-kid",
+      "scope": "feedback",
+      "actor_id": "r-kid",
+      "on_behalf_of_child": false
+    },
+    {
+      "event_id": "e-000010",
+      "kind": "CONSENT_GRANTED",
+      "occurred_at": "2026-08-02T10:18:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 10,
+      "consent_id": "c-kid-event",
+      "reader_id": "r-kid",
+      "scope": "event",
+      "actor_id": "r-parent",
+      "on_behalf_of_child": true
+    },
+    {
+      "event_id": "e-000011",
+      "kind": "BOOK_TITLE_REGISTERED",
+      "occurred_at": "2026-08-03T09:20:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 11,
+      "title_id": "t-bear",
+      "title": "小熊的森林",
+      "author": "某甲",
+      "min_age": 4,
+      "max_age": 8,
+      "interests": [
+        "动物"
+      ],
+      "summary": "初版说明：森林里的小熊。",
+      "revision": 1
+    },
+    {
+      "event_id": "e-000012",
+      "kind": "BOOK_EDITION_PUBLISHED",
+      "occurred_at": "2026-08-03T09:25:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 12,
+      "edition_id": "e-bear",
+      "title_id": "t-bear",
+      "isbn": "978-3-0",
+      "publisher": "未来出版社"
+    },
+    {
+      "event_id": "e-000013",
+      "kind": "COPIES_ADDED",
+      "occurred_at": "2026-08-04T09:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 13,
+      "batch_id": "b-bj-bear",
+      "store_id": "store-bj",
+      "edition_id": "e-bear",
+      "quantity": 1
+    },
+    {
+      "event_id": "e-000014",
+      "kind": "AUTHOR_EVENT_SCHEDULED",
+      "occurred_at": "2026-09-01T09:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 14,
+      "author_event_id": "ev-wh",
+      "store_id": "store-wh",
+      "title": "武汉作家对谈·动物与童年",
+      "author": "某甲",
+      "starts_at": "2026-09-12T14:00:00+08:00",
+      "capacity": 20
+    },
+    {
+      "event_id": "e-000015",
+      "kind": "EVENT_REGISTERED",
+      "occurred_at": "2026-09-02T09:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 15,
+      "author_event_id": "ev-wh",
+      "registration_id": "reg-ev-wh-r-kid",
+      "request_id": "er-1",
+      "reader_id": "r-kid"
+    },
+    {
+      "event_id": "e-000016",
+      "kind": "EVENT_ATTENDANCE_RECORDED",
+      "occurred_at": "2026-09-12T15:30:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 16,
+      "author_event_id": "ev-wh",
+      "registration_id": "reg-ev-wh-r-kid",
+      "reader_id": "r-kid"
+    },
+    {
+      "event_id": "e-000017",
+      "kind": "RECOMMENDATION_MADE",
+      "occurred_at": "2026-09-12T16:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 17,
+      "recommendation_id": "rec-1",
+      "reader_id": "r-kid",
+      "title_id": "t-bear",
+      "title_description_revision": 1,
+      "rationale": "对谈后对动物故事意犹未尽，4-8 岁适龄",
+      "recommended_by": "librarian",
+      "source": "author_event:ev-wh"
+    },
+    {
+      "event_id": "e-000018",
+      "kind": "LOAN_REQUEST_ACCEPTED",
+      "occurred_at": "2026-09-13T10:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 18,
+      "loan_id": "loan-req-cross",
+      "request_id": "req-cross",
+      "reader_id": "r-kid",
+      "edition_id": "e-bear",
+      "owning_store_id": "store-bj",
+      "pickup_store_id": "store-wh",
+      "at": "2026-09-13T10:00:00+08:00"
+    },
+    {
+      "event_id": "e-000019",
+      "kind": "BENEFIT_USED",
+      "occurred_at": "2026-09-13T10:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 19,
+      "reader_id": "r-kid",
+      "benefit": "loan",
+      "ref_id": "loan-req-cross",
+      "at": "2026-09-13T10:00:00+08:00",
+      "request_id": "req-cross"
+    },
+    {
+      "event_id": "e-000020",
+      "kind": "APPOINTMENT_SCHEDULED",
+      "occurred_at": "2026-09-13T10:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 20,
+      "appointment_id": "appt-pickup-loan-req-cross",
+      "loan_id": "loan-req-cross",
+      "appointment_kind": "pickup",
+      "store_id": "store-wh",
+      "scheduled_at": "2026-09-18T10:00:00+08:00",
+      "request_id": "req-cross"
+    },
+    {
+      "event_id": "e-000021",
+      "kind": "LOAN_IN_TRANSIT",
+      "occurred_at": "2026-09-13T10:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 21,
+      "loan_id": "loan-req-cross",
+      "at": "2026-09-13T10:00:00+08:00",
+      "request_id": "req-cross"
+    },
+    {
+      "event_id": "e-000022",
+      "kind": "STORE_CLOSURE_SCHEDULED",
+      "occurred_at": "2026-09-14T09:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 22,
+      "closure_id": "cl-mid",
+      "store_id": "store-wh",
+      "starts_at": "2026-09-17T00:00:00+08:00",
+      "ends_at": "2026-09-19T22:00:00+08:00",
+      "reason": "场馆检修"
+    },
+    {
+      "event_id": "e-000023",
+      "kind": "APPOINTMENT_RESCHEDULED",
+      "occurred_at": "2026-09-14T09:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 23,
+      "appointment_id": "appt-pickup-loan-req-cross",
+      "new_store_id": "store-cs",
+      "new_scheduled_at": "2026-09-19T22:00:00+08:00",
+      "closure_id": "cl-mid"
+    },
+    {
+      "event_id": "e-000024",
+      "kind": "LOAN_READY_FOR_PICKUP",
+      "occurred_at": "2026-09-20T11:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 24,
+      "loan_id": "loan-req-cross",
+      "store_id": "store-cs",
+      "at": "2026-09-20T11:00:00+08:00"
+    },
+    {
+      "event_id": "e-000025",
+      "kind": "LOAN_PICKED_UP",
+      "occurred_at": "2026-09-20T11:05:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 25,
+      "loan_id": "loan-req-cross",
+      "reader_id": "r-kid",
+      "store_id": "store-cs",
+      "at": "2026-09-20T11:05:00+08:00",
+      "due_at": "2026-10-11T11:05:00+08:00"
+    },
+    {
+      "event_id": "e-000026",
+      "kind": "APPOINTMENT_FULFILLED",
+      "occurred_at": "2026-09-20T11:05:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 26,
+      "appointment_id": "appt-pickup-loan-req-cross",
+      "at": "2026-09-20T11:05:00+08:00"
+    },
+    {
+      "event_id": "e-000027",
+      "kind": "TITLE_DESCRIPTION_UPDATED",
+      "occurred_at": "2026-09-25T10:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 27,
+      "title_id": "t-bear",
+      "revision": 2,
+      "summary": "修订说明：小熊学会了辨认星座。",
+      "change_note": "增补星座情节"
+    },
+    {
+      "event_id": "e-000028",
+      "kind": "FAMILY_FEEDBACK_RECORDED",
+      "occurred_at": "2026-10-05T19:00:00+08:00",
+      "subject_id": "family-reading-continuity",
+      "version": 28,
+      "feedback_id": "fb-1",
+      "family_id": "fam-1",
+      "reader_id": "r-kid",
+      "title_id": "t-bear",
+      "loan_id": "loan-req-cross",
+      "author_event_id": "ev-wh",
+      "rating": 5,
+      "note": "共读了两遍，孩子开始追问星座。",
+      "at": "2026-10-05T19:00:00+08:00"
+    }
+  ],
+  "projections_at": "2026-10-06",
+  "summary": {
+    "roster": {
+      "author_event_id": "ev-wh",
+      "title": "武汉作家对谈·动物与童年",
+      "store_id": "store-wh",
+      "starts_at": "2026-09-12T14:00:00+08:00",
+      "capacity": 20,
+      "registered_count": 1,
+      "waitlist_count": 0,
+      "attended_count": 1,
+      "seats_left": 19,
+      "registered": [
+        {
+          "reader_id": "r-kid",
+          "registration_id": "reg-ev-wh-r-kid",
+          "from_waitlist": false
+        }
+      ],
+      "waitlist": [],
+      "attended": [
+        "r-kid"
+      ]
+    },
+    "loan": {
+      "loan_id": "loan-req-cross",
+      "reader_id": "r-kid",
+      "edition_id": "e-bear",
+      "status": "picked_up",
+      "status_label": "借阅中",
+      "owning_store_id": "store-bj",
+      "pickup_store_id": "store-cs",
+      "cross_store": true,
+      "due_at": "2026-10-11",
+      "overdue": false,
+      "return_store_id": null,
+      "pickup_appointment": {
+        "appointment_id": "appt-pickup-loan-req-cross",
+        "appointment_kind": "pickup",
+        "store_id": "store-cs",
+        "scheduled_at": "2026-09-19T22:00:00+08:00",
+        "status": "fulfilled",
+        "rescheduled_for_closure": "cl-mid"
+      },
+      "return_appointment": null
+    },
+    "recommendation_as_made": {
+      "recommendation_id": "rec-1",
+      "reader_id": "r-kid",
+      "title_id": "t-bear",
+      "title": "小熊的森林",
+      "frozen_revision": 1,
+      "summary_then": "初版说明：森林里的小熊。",
+      "current_revision": 2,
+      "rationale": "对谈后对动物故事意犹未尽，4-8 岁适龄",
+      "recommended_by": "librarian",
+      "source": "author_event:ev-wh",
+      "summary_changed_since": true
+    },
+    "trace": {
+      "author_event_id": "ev-wh",
+      "attended": [
+        "r-kid"
+      ],
+      "loans_after_event": [
+        {
+          "loan_id": "loan-req-cross",
+          "reader_id": "r-kid",
+          "edition_id": "e-bear",
+          "status": "picked_up",
+          "status_label": "借阅中",
+          "owning_store_id": "store-bj",
+          "pickup_store_id": "store-cs",
+          "cross_store": true,
+          "due_at": "2026-10-11",
+          "overdue": false,
+          "return_store_id": null,
+          "pickup_appointment": {
+            "appointment_id": "appt-pickup-loan-req-cross",
+            "appointment_kind": "pickup",
+            "store_id": "store-cs",
+            "scheduled_at": "2026-09-19T22:00:00+08:00",
+            "status": "fulfilled",
+            "rescheduled_for_closure": "cl-mid"
+          },
+          "return_appointment": null
+        }
+      ],
+      "guides_from_event": [],
+      "family_feedback": [
+        {
+          "feedback_id": "fb-1",
+          "reader_id": "r-kid",
+          "title_id": "t-bear",
+          "loan_id": "loan-req-cross",
+          "rating": 5,
+          "note": "共读了两遍，孩子开始追问星座。"
+        }
+      ]
+    }
+  }
+}
